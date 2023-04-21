@@ -1,0 +1,276 @@
+Web Technology
+
+Assigment No : 2
+
+
+SET A 
+
+1 ) Write a PHP script to accept the number from user and Write a php function to 
+calculate the factorial of a number (a non-negative integer). The function accepts 
+the number as an argument.
+
+Ans : 
+
+calculateFactorial.php source code 
+
+<?php
+if(isset($_POST['number'])) {
+    $number = intval($_POST['number']);
+    if($number >= 0) {
+        $factorial = 1;
+        for($i = 1; $i <= $number; $i++) {
+            $factorial *= $i;
+        }
+        echo "The factorial of $number is $factorial.";
+    } else {
+        echo "Please enter a non-negative integer.";
+    }
+}
+?>
+
+<form method="post" action="">
+    <label for="number">Enter a non-negative integer:</label>
+    <input type="number" name="number" required>
+    <button type="submit">Calculate Factorial</button>
+</form>
+
+
+
+2)  Design a HTML form to accept a string. Write a php function to reverse a string.
+Ans : 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reverse a String</title>
+</head>
+<body>
+    <h1>Reverse a String</h1>
+    <form method="post" action="">
+        <label for="string">Enter a string:</label>
+        <input type="text" name="string" required>
+        <button type="submit">Reverse</button>
+    </form>
+    <?php
+    if(isset($_POST['string'])) {
+        $string = $_POST['string'];
+        $reversedString = reverseString($string);
+        echo "<p>The reversed string is: $reversedString</p>";
+    }
+
+    function reverseString($string) {
+        $reversedString = "";
+        $length = strlen($string);
+        for ($i = $length - 1; $i >= 0; $i--) {
+            $reversedString .= $string[$i];
+        }
+        return $reversedString;
+    }
+    ?>
+</body>
+</html>
+
+
+
+3) Design a HTML form to accept a string. Write a PHP function that checks 
+whether a passed string is a palindrome or not? 
+Ans :
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check for Palindrome</title>
+</head>
+<body>
+    <h1>Check for Palindrome</h1>
+    <?php
+    if(isset($_POST['string'])) {
+        $string = $_POST['string'];
+        if(isPalindrome($string)) {
+            echo "<p>$string is a palindrome.</p>";
+        } else {
+            echo "<p>$string is not a palindrome.</p>";
+        }
+    }
+
+    function isPalindrome($string) {
+        $string = strtolower($string);
+        $string = preg_replace('/[^a-z0-9]/', '', $string);
+        $reversedString = strrev($string);
+        return $string === $reversedString;
+    }
+    ?>
+    <form method="post" action="">
+        <label for="string">Enter a string:</label>
+        <input type="text" name="string" required>
+        <button type="submit">Check</button>
+    </form>
+</body>
+</html>
+
+
+
+SET B ,
+
+1. Design a HTML page to accept a number and write a PHP script to display that 
+number in words e.g. 123 - one two three
+Ans : 
+
+<?php
+if (isset($_POST['number'])) {
+    function num_to_words($num) {
+        $num = (int)$num;
+        $num_str = (string)$num;
+        $words = "";
+        for ($i = 0; $i < strlen($num_str); $i++) {
+            $digit = (int)$num_str[$i];
+            switch ($digit) {
+                case 0:
+                    $words .= "";
+                    break;
+                case 1:
+                    $words .= "one ";
+                    break;
+                case 2:
+                    $words .= "two ";
+                    break;
+                case 3:
+                    $words .= "three ";
+                    break;
+                case 4:
+                    $words .= "four ";
+                    break;
+                case 5:
+                    $words .= "five ";
+                    break;
+                case 6:
+                    $words .= "six ";
+                    break;
+                case 7:
+                    $words .= "seven ";
+                    break;
+                case 8:
+                    $words .= "eight ";
+                    break;
+                case 9:
+                    $words .= "nine ";
+                    break;
+            }
+        }
+        return $words;
+    }
+    $number = $_POST['number'];
+    $words = num_to_words($number);
+    echo "<p>$number in words is: $words</p>";
+}
+?>
+
+<form action="" method="post">
+  <label for="number">Enter a number:</label>
+  <input type="text" id="number" name="number">
+  <input type="submit" value="Submit">
+</form>
+
+
+2 ) Design a HTML form to accept a string. Write a PHP script for the following.
+ a) Write a function to count the total number of Vowels from the script.
+ b) Show the occurrences of each Vowel from the script.
+Ans : 
+
+<?php
+if (isset($_POST['string'])) {
+    function vowel_count($str) {
+        $str = strtolower($str);
+        $count = 0;
+        $a_count = substr_count($str, 'a');
+        $e_count = substr_count($str, 'e');
+        $i_count = substr_count($str, 'i');
+        $o_count = substr_count($str, 'o');
+        $u_count = substr_count($str, 'u');
+        $count = $a_count + $e_count + $i_count + $o_count + $u_count;
+        return array($count, $a_count, $e_count, $i_count, $o_count, $u_count);
+    }
+    $string = $_POST['string'];
+    list($count, $a_count, $e_count, $i_count, $o_count, $u_count) = vowel_count($string);
+    echo "<p>Total number of vowels: $count</p>";
+    echo "<ul>";
+    echo "<li>a: $a_count</li>";
+    echo "<li>e: $e_count</li>";
+    echo "<li>i: $i_count</li>";
+    echo "<li>o: $o_count</li>";
+    echo "<li>u: $u_count</li>";
+    echo "</ul>";
+}
+?>
+
+<form action="" method="post">
+  <label for="string">Enter a string:</label>
+  <input type="text" id="string" name="string">
+  <input type="submit" value="Submit">
+</form>
+
+
+3 ) Write a PHP script for the following: a) Design a form to accept two numbers 
+from the users. b) Give option to choose an arithmetic operation (use Radio 
+Button). c) Display the result on next form. d) Use concept of default parameter.
+Ans :
+<?php
+function calculate($num1, $num2, $operator = "+") {
+    switch($operator) {
+        case "+":
+            return $num1 + $num2;
+            break;
+        case "-":
+            return $num1 - $num2;
+            break;
+        case "*":
+            return $num1 * $num2;
+            break;
+        case "/":
+            return $num1 / $num2;
+            break;
+        default:
+            return "Invalid operator";
+    }
+}
+
+if(isset($_POST['submit'])) {
+    $num1 = $_POST['num1'];
+    $num2 = $_POST['num2'];
+    $operator = $_POST['operator'];
+    $result = calculate($num1, $num2, $operator);
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arithmetic Calculator</title>
+</head>
+<body>
+    <h1>Arithmetic Calculator</h1>
+    <form method="post" action="">
+        <label for="num1">Number 1:</label>
+        <input type="number" name="num1" required>
+        <br><br>
+        <label for="num2">Number 2:</label>
+        <input type="number" name="num2" required>
+        <br><br>
+        <label for="operator">Select an operator:</label>
+        <input type="radio" name="operator" value="+" checked> +
+        <input type="radio" name="operator" value="-"> -
+        <input type="radio" name="operator" value="*"> *
+        <input type="radio" name="operator" value="/"> /
+        <br><br>
+        <button type="submit" name="submit">Calculate</button>
+    </form>
+
+    <?php if(isset($result)): ?>
+        <h2>Result: <?php echo $result; ?></h2>
+    <?php endif; ?>
+</body>
+</html>
+
+
+
+
+

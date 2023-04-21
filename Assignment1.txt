@@ -1,0 +1,183 @@
+Web Technology
+
+Assigment No 1:
+
+ SET a,
+1)  Write a PHP Script to get the PHP Version and Configuration information.
+Ans :<?php
+     phpinfo();
+    ?>
+
+2)  Write a PHP Script to display student information on Webpage.
+Ans :<?php
+    $name = "John Smith";
+	$age = 20;
+	$branch = "Computer Science";
+	echo "Name : $name\nAge : $age\nBranch : $branch";
+    ?>
+
+3) Write A PHP Script to display Timetable of Your Class.
+Ans :<?php
+
+$sub1 = "DSA in CPP";
+$sub2 = "Basic Java";
+
+echo "<table border='1'>";
+echo "<tr><th>Time</th><th>Class Schedule</th></tr>";
+echo "<tr><td>8:00 - 9:00</td><td>$sub1</td></tr>";
+echo "<tr><td>9:00 - 10:00</td><td>$sub2</td></tr>";
+echo "<tr><td>10:00 - 11:00</td><td>$sub1</td></tr>";
+echo "<tr><td>11:00 - 12:00</td><td>$sub2</td></tr>";
+echo "<tr><td>12:00 - 1:00</td><td>$sub1</td></tr>";
+echo "</table>";
+
+?>
+ 
+ SET b,
+
+1)  Write a PHP script to declare three variables and print maximum among them.
+Ans :
+<?php
+
+// Declare the variables
+$a = 10;
+$b = 20;
+$c = 15;
+
+// Find the maximum value using control statements
+if ($a > $b && $a > $c) {
+  $max = $a;
+} elseif ($b > $a && $b > $c) {
+  $max = $b;
+} else {
+  $max = $c;
+}
+
+// Output the maximum value
+echo "The maximum value is: " . $max;
+
+?>
+
+2)  Write a PHP script to check number 153 is Armstrong or not.
+Ans :
+<?php
+
+// Define the number to check
+$num = 153;
+
+// Calculate the sum of the cubes of each digit
+$sum = 0;
+$temp = $num;
+while ($temp > 0) {
+  $digit = $temp % 10;
+  $sum += pow($digit, 3);
+  $temp = floor($temp / 10);
+}
+
+// Check if the sum is equal to the original number
+if ($sum == $num) {
+  echo "$num is an Armstrong number";
+} else {
+  echo "$num is not an Armstrong number";
+}
+
+?>
+
+3)  Write a PHP script to check whether accepted number is prime or not.
+Ans :
+<?php
+
+// Define the number to check
+$num = 17;
+
+// Check if the number is prime
+$isPrime = true;
+for ($i = 2; $i <= sqrt($num); $i++) {
+  if ($num % $i == 0) {
+    $isPrime = false;
+    break;
+  }
+}
+
+// Output the result
+if ($isPrime) {
+  echo "$num is a prime number";
+} else {
+  echo "$num is not a prime number";
+}
+
+?>
+
+SET C,
+
+1) Write a PHP script to print following floyd’s triangle.
+1
+2 3
+4 5 6
+7 8 9 10
+Ans  : 
+<?php
+
+// Define the number of rows to print
+$rows = 4;
+
+// Initialize the counter variable
+$num = 1;
+
+// Print the Floyd's triangle
+for ($i = 1; $i <= $rows; $i++) {
+  for ($j = 1; $j <= $i; $j++) {
+    echo $num . " ";
+    $num++;
+  }
+  echo "<br>";
+}
+
+?>
+
+2)  Write a PHP script to display source code of a webpage.
+Ans :  
+
+example.html source code
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example HTML Page</title>
+</head>
+<body>
+	<header>
+		<h1>Welcome to my website</h1>
+	</header>
+	<main>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+    </main>
+</body>
+</html>
+
+
+<?php
+
+// Define the filename of the HTML page to display
+$filename = "example.html";
+
+// Display the source code of the HTML page
+show_source($filename);
+
+?>
+
+
+
+3)  Write a PHP script to test whether a number is greater than 30, 20 or 10 using ternary operator.
+Ans :
+<?php
+  $number = 25;
+  $result = $number > 30 ? 'greater than 30' :
+ ($number > 20 ? 'greater than 20' : 
+($number > 10 ? 'greater than 10' : 
+'less than or equal to 10'));
+  echo $result;
+?>
+
+
+      

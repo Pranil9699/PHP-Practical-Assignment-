@@ -1,0 +1,384 @@
+Web Technology Practical Assigment
+
+Assigment no : 4
+
+SET 1 ,
+
+1)  Write a PHP program to define Interface shape which has two method as area() and volume ().
+    Define a constant PI. Create a class Cylinder implement this interface and calculate area and Volume.
+Ans :
+<?php
+interface Shape {
+    const PI = 3.14;
+    public function area();
+    public function volume();
+}
+
+class Cylinder implements Shape {
+    private $radius;
+    private $height;
+
+    public function __construct($radius, $height) {
+        $this->radius = $radius;
+        $this->height = $height;
+    }
+
+    public function area() {
+        return 2 * self::PI * $this->radius * ($this->radius + $this->height);
+    }
+
+    public function volume() {
+        return self::PI * pow($this->radius, 2) * $this->height;
+    }
+}
+
+$cylinder = new Cylinder(3, 4);
+echo "Area: " . $cylinder->area() . "\n";
+echo "Volume: " . $cylinder->volume() . "\n";
+?>
+
+
+2.  Write a PHP script to create a Class shape and its subclass triangle, square and 
+    display area of the selected shape.( use the concept of Inheritance)
+    Display menu (use radio button)
+a) Triangle
+b) Square
+c) Rectangle
+d) Circle
+
+Ans : 
+
+
+index.html,
+
+
+<form action="shape.php" method="post">
+  <input type="radio" name="shape" value="triangle">Triangle<br>
+  <input type="radio" name="shape" value="square">Square<br>
+  <input type="radio" name="shape" value="rectangle">Rectangle<br>
+  <input type="radio" name="shape" value="circle">Circle<br>
+  <input type="submit">
+</form>
+
+
+
+shapes.php ,
+<?php
+abstract class Shape {
+    abstract public function area();
+}
+
+class Triangle extends Shape {
+    private $base;
+    private $height;
+
+    public function __construct($base, $height) {
+        $this->base = $base;
+        $this->height = $height;
+    }
+    public function area() {
+        return 0.5 * $this->base * $this->height;
+    }
+}
+
+class Square extends Shape {
+    private $side;
+
+    public function __construct($side) {
+        $this->side = $side;
+    }
+
+    public function area() {
+        return pow($this->side, 2);
+    }
+}
+class Rectangle extends Shape {
+    private $length;
+    private $width;
+
+    public function __construct($length, $width) {
+        $this->length = $length;
+        $this->width = $width;
+    }
+
+    public function area() {
+        return $this->length * $this->width;
+    }
+}
+
+class Circle extends Shape {
+    const PI = 3.14;
+    private $radius;
+
+    public function __construct($radius) {
+        $this->radius = $radius;
+    }
+    public function area() {
+        return self::PI * pow($this->radius, 2);
+    }
+}
+?>
+
+
+shape.php,
+
+<?php
+include 'shapes.php';
+
+if (isset($_POST['shape'])) {
+    switch ($_POST['shape']) {
+        case 'triangle':
+            $base = $_POST['base'];
+            $height = $_POST['height'];
+            $triangle = new Triangle($base, $height);
+            echo "Area: " . $triangle->area();
+            break;
+        case 'square':
+            $side = $_POST['side'];
+            $square = new Square($side);
+            echo "Area: " . $square->area();
+            break;
+        case 'rectangle':
+            $length = $_POST['length'];
+            $width = $_POST['width'];
+            $rectangle = new Rectangle($length, $width);
+            echo "Area: " . $rectangle->area();
+            break;
+        case 'circle':
+            $radius = $_POST['radius'];
+            $circle = new Circle($radius);
+            echo "Area: " . $circle->area();
+            break;
+    }
+}
+?>
+
+
+3) Write class declarations and member function definitions for Teacher (code, 
+name, qualification). Derive teach_account(account_no,joining_date) from 
+Teacher and teach_sal(basic_pay, earnings, deduction) fromteach_account.Write 
+a menu driven program
+a) To build a master table
+b) To sort all entries
+c) To search an entry
+d) Display salary of all teachers.
+
+Ans : 
+
+<?php
+class Teacher {
+    private $code;
+    private $name;
+    private $qualification;
+
+    public function __construct($code, $name, $qualification) {
+        $this->code = $code;
+        $this->name = $name;
+        $this->qualification = $qualification;
+    }
+
+    public function getCode() {
+        return $this->code;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getQualification() {
+        return $this->qualification;
+    }
+}
+
+class TeachAccount extends Teacher {
+    private $accountNo;
+    private $joiningDate;
+
+    public function __construct($code, $name, $qualification, $accountNo, $joiningDate) {
+        parent::__construct($code, $name, $qualification);
+        $this->accountNo = $accountNo;
+        $this->joiningDate = $joiningDate;
+    }
+
+    public function getAccountNo() {
+        return $this->accountNo;
+    }
+
+    public function getJoiningDate() {
+        return $this->joiningDate;
+    }
+}
+
+class TeachSal extends TeachAccount {
+    private $basicPay;
+    private $earnings;
+    private $deductions;
+
+    public function __construct($code, $name, $qualification, $accountNo, $joiningDate, $basicPay, $earnings, $deductions) {
+        parent::__construct($code, $name, $qualification, $accountNo, $joiningDate);
+        $this->basicPay = $basicPay;
+        $this->earnings = $earnings;
+        $this->deductions = $deductions;
+    }
+
+    public function getBasicPay() {
+        return $this->basicPay;
+    }
+
+    public function getEarnings() {
+        return $this->earnings;
+    }
+
+    public function getDeductions() {
+        return $this->deductions;
+    }
+
+    public function getSalary() {
+        return ($this->basicPay +$this->earnings) - ($this->deductions);
+    }
+}
+?>
+
+
+<?php
+include 'teacher.php';
+
+$teachers = [];
+
+function buildMasterTable() {
+  global $teachers;
+
+  if (isset($_POST['code']) && isset($_POST['name']) && isset($_POST['qualification']) && isset($_POST['accountNo']) && isset($_POST['joiningDate']) && isset($_POST['basicPay']) && isset($_POST['earnings']) && isset($_POST['deductions'])) {
+    $code = $_POST['code'];
+    $name = $_POST['name'];
+    $qualification = $_POST['qualification'];
+    $accountNo = $_POST['accountNo'];
+    $joiningDate = $_POST['joiningDate'];
+    $basicPay = $_POST['basicPay'];
+    $earnings = $_POST['earnings'];
+    $deductions = $_POST['deductions'];
+
+    $teacher = new TeachSal($code, $name, $qualification, $accountNo, $joiningDate, $basicPay, $earnings, $deductions);
+    array_push($teachers, $teacher);
+  }
+}
+
+function sortEntries() {
+  global  teachers;
+
+  usort($teachers, function($a, $b) {
+    return strcmp($a->getCode(), $b->getCode());
+  });
+}
+
+function searchEntry() {
+  global teachers;
+
+  if (isset($_POST['query'])) {
+    $query = $_POST['query'];
+
+    foreach ($teachers as &$teacher) {
+      if ($teacher->getCode() == $query || stripos($teacher->getName(), $query) !== false) {
+        echo "Teacher: " . htmlspecialchars($teacher->getName()) . "\n";
+        echo "Code: " . htmlspecialchars($teacher->getCode()) . "\n";
+        echo "Qualification: " . htmlspecialchars($teacher->getQualification()) . "\n";
+        echo "Account No: " . htmlspecialchars($teacher->getAccountNo()) . "\n";
+        echo "Joining Date: " . htmlspecialchars($teacher->getJoiningDate()) . "\n";
+        echo "Basic Pay: " . htmlspecialchars($teacher->getBasicPay()) . "\n";
+        echo "Earnings: " . htmlspecialchars($teacher->getEarnings()) . "\n";
+        echo "Deductions: " . htmlspecialchars($teacher->getDeductions()) . "\n";
+        echo "Salary: " . htmlspecialchars($teacher->getSalary()) . "\n";
+        echo "\n";
+      }
+    }
+  }
+}
+
+function displaySalaries() {
+  global teachers;
+
+  foreach ($teachers as &$teacher) {
+      echo "Teacher: " . htmlspecialchars($teacher->getName()) . "\n";
+      echo "Salary: " . htmlspecialchars($teacher->getSalary()) . "\n";
+      echo "\n";
+  }
+}
+
+// Display menu options and handle user input
+if (isset($_GET['action'])) {
+  switch ($_GET['action']) {
+    case 'buildMasterTable':
+      buildMasterTable();
+      break;
+    case 'sortEntries':
+      sortEntries();
+      break;
+    case 'searchEntry':
+      searchEntry();
+      break;
+    case 'displaySalaries':
+      displaySalaries();
+      break;
+  }
+}
+?>
+
+
+<a href="menu.php?action=buildMasterTable">Build Master Table</a><br>
+<a href="menu.php?action=sortEntries">Sort Entries</a><br>
+<a href="menu.php?action=searchEntry">Search Entry</a><br>
+<a href="menu.php?action=displaySalaries">Display Salaries</a><br>
+
+
+
+4) Write PHP script to demonstrate the concept of introspection for examining 
+object.
+
+
+<?php
+
+class Person {
+  public $name;
+  private $age;
+
+  function __construct($name, $age) {
+    $this->name = $name;
+    $this->age = $age;
+  }
+
+  function getAge() {
+    return $this->age;
+  }
+}
+
+$person = new Person("John", 30);
+
+// Get class name
+echo "Class name: " . get_class($person) . "<br>";
+
+// Check if object has property
+if(property_exists($person, "name")) {
+  echo "Property 'name' exists <br>";
+}
+
+// Get object properties
+$properties = get_object_vars($person);
+foreach($properties as $key => $value) {
+  echo "Property '$key' has value '$value' <br>";
+}
+
+// Get object methods
+$methods = get_class_methods($person);
+foreach($methods as $method) {
+  echo "Method '$method' exists <br>";
+}
+
+// Check if object has method
+if(method_exists($person, "getAge")) {
+  echo "Method 'getAge' exists <br>";
+}
+
+// Call object method
+$age = $person->getAge();
+echo "Age: $age <br>";
+?>

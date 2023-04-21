@@ -1,0 +1,34 @@
+CREATE TABLE agents (
+  agent_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  agent_name VARCHAR(50) NOT NULL,
+  agent_city VARCHAR(30) NOT NULL,
+  agent_experience INT(4) NOT NULL
+);
+
+INSERT INTO agents (agent_name, agent_city, agent_experience) VALUES ('John Doe', 'Pune', 5);
+INSERT INTO agents (agent_name, agent_city, agent_experience) VALUES ('Jane Smith', 'Mumbai', 3);
+INSERT INTO agents (agent_name, agent_city, agent_experience) VALUES ('David Lee', 'Chennai', 4);
+INSERT INTO agents (agent_name, agent_city, agent_experience) VALUES ('Amy Chen', 'Pune', 2);
+INSERT INTO agents (agent_name, agent_city, agent_experience) VALUES ('Mark Singh', 'Mumbai', 1);
+
+CREATE TABLE policies (
+    policy_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    policy_type VARCHAR(50) NOT NULL,
+    policy_amount FLOAT(10, 2) NOT NULL,
+    policy_start_date DATE NOT NULL,
+    policy_end_date DATE NOT NULL,
+    policy_holder_name VARCHAR(50) NOT NULL,
+    agent_id INT(6) UNSIGNED,
+    CONSTRAINT fk_agent
+        FOREIGN KEY (agent_id)
+        REFERENCES agents(agent_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+INSERT INTO policies (policy_type, policy_amount, policy_start_date, policy_end_date, policy_holder_name, agent_id) VALUES ('vehicle', 30000.00, '2022-01-01', '2023-01-01', 'John Doe', 1);
+INSERT INTO policies (policy_type, policy_amount, policy_start_date, policy_end_date, policy_holder_name, agent_id) VALUES ('life', 75000.00, '2022-03-01', '2027-03-01', 'Jane Smith', 2);
+INSERT INTO policies (policy_type, policy_amount, policy_start_date, policy_end_date, policy_holder_name, agent_id) VALUES ('accident', 25000.00, '2021-12-01', '2022-12-01', 'Mike Johnson', 3);
+INSERT INTO policies (policy_type, policy_amount, policy_start_date, policy_end_date, policy_holder_name, agent_id) VALUES ('life', 50000.00, '2022-02-15', '2027-02-15', 'Sarah Lee', 1);
+INSERT INTO policies (policy_type, policy_amount, policy_start_date, policy_end_date, policy_holder_name, agent_id) VALUES ('vehicle', 40000.00, '2022-04-01', '2023-04-01', 'Alex Kim', 2);
